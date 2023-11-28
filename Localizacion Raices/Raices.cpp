@@ -1,7 +1,7 @@
 /**
  * Localizacion de raices a traves de diferentes metodos numericos
  * @author Benjamin Vargas
- * @version 3.0
+ * @version 4.0
 */
 #define PRESICION 24 //cantidad de decimales a imprimir
 #include<iostream>
@@ -14,10 +14,18 @@ double g(double);
 void biseccion(void);
 void regularFalsi(void);
 void puntoFijo(void);
+void newtonRaphson(void);
+double df(double x);
+void secante(void);
+
+double df(double x)
+{
+    return 2*x;
+}
 
 double f(double x)
 {
-    return (x-1)*(x-1)*(x-1);
+    return pow(x,2)-2;
 }
 
 double g(double x)
@@ -38,6 +46,7 @@ int main()
         cout<<"1.Biseccion\n";
         cout<<"2.Regular Falsi\n";
         cout<<"3.Punto Fijo\n";
+        cout<<"4.Newton - Raphson\n";
         cout<<"0.Salir\n";
         cin>>op;
         switch (op)
@@ -53,6 +62,10 @@ int main()
         case 3:
             puntoFijo();
             break;
+        case 4:
+            newtonRaphson();
+            break;
+        break;
         default:
             cout<<"Opcion invalida!\n";
             break;
@@ -116,10 +129,10 @@ void biseccion (void)
             }
 
             //error relativo aproximado
-            //e = fabs(c-cv)/fabs(cv);
+            //e = fabs(c-cv)/fabs(c);
 
             //error porcentual aproximado
-            //e = (fabs(c-cv)/fabs(cv))*100;
+            //e = (fabs(c-cv)/fabs(c))*100;
 
             //error absoluto aproximado
             //e = fabs(c-cv);
@@ -185,10 +198,10 @@ void regularFalsi(void)
             }
 
             //error relativo aproximado
-            //e = fabs(c-cv)/fabs(cv);
+            //e = fabs(c-cv)/fabs(c);
 
             //error porcentual aproximado
-            //e = (fabs(c-cv)/fabs(cv))*100;
+            //e = (fabs(c-cv)/fabs(c))*100;
 
             //error absoluto aproximado
             e = fabs(c-cv);
@@ -227,10 +240,10 @@ void puntoFijo(void)
             e = fabs(xv-xn);
 
             //error relativo aproximado
-            //e = fabs(c-cv)/fabs(cv);
+            //e = fabs(xn-xv)/fabs(xn);
 
             //error porcentual aproximado
-            //e = (fabs(c-cv)/fabs(cv))*100;
+            //e = (fabs(xn-xv)/fabs(xn))*100;
 
         }
         xv = xn;
@@ -238,3 +251,54 @@ void puntoFijo(void)
     } while (e > tol);
     cout<<"\nPunto fijo = "<<setprecision(PRESICION)<<xn<<"\nError= "<<setprecision(PRESICION)<<e<<"\nIteraciones: "<<i<<"\n";
 }
+
+void newtonRaphson(void)
+{
+    double xv=0,xn=0,e=0,tol=0;
+    int ii=1, flag=0;
+    cout<<"Recuerda definir correctamente f(x) y f'(x), y un limite de iteraciones\n";
+    cout<<"Ingresa un punto: ";
+    cin>>xv;
+    cout<<"\nIngresa tolerancia: ";
+    cin>>tol;
+    
+    do
+    {
+        if(ii>10000)
+        {
+            cout<<"Mas de 10 mil iteraciones!\n";
+            flag=1;
+            break;
+        }
+        if(fabs(df(xv))< 1e-5)
+        {
+            cout<<"\nderivada muy pequeña";
+            flag =1;
+            break;
+        }
+        else
+        {
+            xn = xv - (f(xv)/df(xv));
+
+            //error absoluto aproximado
+            e = fabs(xv-xn);
+
+            //error relativo aproximado
+            //e = fabs(xn-xv)/fabs(xn);
+
+            //error porcentual aproximado
+            //e = (fabs(xn-xv)/fabs(xn))*100;
+
+            xv=xn;
+        }
+        ii++;
+    }
+    while(e>tol);
+    if(!flag)
+    {
+        cout<<"\nRaiz = "<<setprecision(PRESICION)<<xn<<"\nError= "<<setprecision(PRESICION)<<e<<"\nIteraciones: "<<ii;
+    }   
+}
+
+void secante(void)
+{}
