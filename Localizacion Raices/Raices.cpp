@@ -1,7 +1,7 @@
 /**
  * Localizacion de raices a traves de diferentes metodos numericos
  * @author Benjamin Vargas
- * @version 4.0
+ * @version 5.0
 */
 #define PRESICION 24 //cantidad de decimales a imprimir
 #include<iostream>
@@ -47,6 +47,7 @@ int main()
         cout<<"2.Regular Falsi\n";
         cout<<"3.Punto Fijo\n";
         cout<<"4.Newton - Raphson\n";
+        cout<<"5.Secante\n";
         cout<<"0.Salir\n";
         cin>>op;
         switch (op)
@@ -65,7 +66,9 @@ int main()
         case 4:
             newtonRaphson();
             break;
-        break;
+        case 5:
+            secante();
+            break;
         default:
             cout<<"Opcion invalida!\n";
             break;
@@ -301,4 +304,39 @@ void newtonRaphson(void)
 }
 
 void secante(void)
-{}
+{
+    double xm1=0, xi=0,xn=0,e=0,tol=0;
+    int ii=1, flag=0;
+    cout<<"Recuerda cargar correctamente f(x)\n";
+    cout<<"Ingresa xi-1: ";
+    cin>>xm1;
+    cout<<"Ingresa xi: ";
+    cin>>xi;
+    cout<<"\nIngresa tolerancia: ";
+    cin>>tol;
+    do
+    {
+        if(fabs((f(xm1)-f(xi)))< 1e-5)
+        {
+            cout<<"\ndenominador se volvio muy pequeño";
+            flag =1;
+            break;
+        }
+        else
+        {
+            xn = xi - (f(xi)*(xm1-xi))/(f(xm1)-f(xi));
+            e = fabs((xn-xi)/xn);
+            xm1=xi;
+            xi=xn;
+
+            ii++;
+        }
+    }
+    while(e>tol);
+
+    if(!flag)
+    {
+
+        cout<<"\nRaiz = "<<setprecision(PRESICION)<<xn<<"\nError= "<<setprecision(PRESICION)<<e<<"\nIteraciones: "<<ii<<"\n";
+    }
+}
