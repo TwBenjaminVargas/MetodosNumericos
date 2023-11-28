@@ -22,7 +22,7 @@ double f(double x)
 
 double g(double x)
 {
-    return 0;
+    return exp(-x);
 }
 
 
@@ -37,6 +37,7 @@ int main()
         cout<<"\nSelecciona una opcion:\n";
         cout<<"1.Biseccion\n";
         cout<<"2.Regular Falsi\n";
+        cout<<"3.Punto Fijo\n";
         cout<<"0.Salir\n";
         cin>>op;
         switch (op)
@@ -48,6 +49,9 @@ int main()
             break;
         case 2:
             regularFalsi();
+            break;
+        case 3:
+            puntoFijo();
             break;
         default:
             cout<<"Opcion invalida!\n";
@@ -203,7 +207,7 @@ void puntoFijo(void)
 {
     double xn = 0,e=1, tol=0, xv=0;
     int i =1;
-
+    cout<<"Recuerda modificar correctamente la funcion g(x)=x\n";
     cout<<"Ingresa un punto(Puede ser cualquiera): ";
     cin>>xv;
     cout<<"\nIngresa tolerancia: ";
