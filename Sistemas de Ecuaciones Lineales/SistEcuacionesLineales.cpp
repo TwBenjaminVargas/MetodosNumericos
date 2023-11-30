@@ -1,9 +1,9 @@
 /**
  * Solucion de sistemas de ecuaciones lineales a traves de diferentes metodos numericos
  * @author Benjamin Vargas
- * @version 3.1
+ * @version 3.2
 */
-#define PRESICION 2 //cantidad de decimales a imprimir
+#define PRESICION 10 //cantidad de decimales a imprimir
 #include<iostream>
 #include<cmath>
 #include <iomanip>
@@ -87,6 +87,7 @@ int main()
             break;
         case 1:
             Gauss(matrixA,vectorb,n);
+            cout<<"ADVERTENCIA: el metodo eliminacion gaussiana modifica la matrizA(Triangulacion), por ello se recomienda reiniciar sistema";
             break;
         case 2:
             jacobi(matrixA,vectorb,n);
@@ -101,6 +102,12 @@ int main()
 
     } while (op !=0);
     
+    //liberacion de memoria
+    for(int i=0;i<n;i++)
+        free(matrixA[i]);
+    free(matrixA);
+    free(vectorb);
+
    return 0;
 }
 
@@ -268,8 +275,8 @@ double* jacobi(double** matrixA,double* vectorb,int n )
     //impresion
     cout<<"Resultados:\n";
     for(int i=0;i<n;i++)
-        cout<<"X"<<i+1<<" = "<<xn[i]<<"\n";
-    cout<<"Error abs estimado: "<<e<<"\n";
+        cout<<"X"<<i+1<<" = "<<setprecision(PRESICION)<<xn[i]<<"\n";
+    cout<<"Error abs estimado: "<<setprecision(PRESICION)<<e<<"\n";
     cout<<"Iteraciones: "<<iter<<"\n\n";
 
     return xn;
@@ -297,7 +304,6 @@ double* gaussSeidel(double** matrixA,double* vectorb,int n)
         }
     }
 
-    //JACOBI
     double *xn = (double*)malloc(n*sizeof(double));
 
     double *xv = (double*)malloc(n*sizeof(double));
@@ -348,8 +354,8 @@ double* gaussSeidel(double** matrixA,double* vectorb,int n)
      //impresion
     cout<<"Resultados:\n";
     for(int i=0;i<n;i++)
-        cout<<"X"<<i+1<<" = "<<xn[i]<<"\n";
-    cout<<"Error abs estimado: "<<e<<"\n";
+        cout<<"X"<<i+1<<" = "<<setprecision(PRESICION)<<xn[i]<<"\n";
+    cout<<"Error abs estimado: "<<setprecision(PRESICION)<<e<<"\n";
     cout<<"Iteraciones: "<<iter<<"\n\n";
     return xn;
 }
