@@ -1,7 +1,7 @@
 /**
  * Solucion de sistemas de ecuaciones lineales a traves de diferentes metodos numericos
  * @author Benjamin Vargas
- * @version 2.0
+ * @version 3.1
 */
 #define PRESICION 2 //cantidad de decimales a imprimir
 #include<iostream>
@@ -12,6 +12,7 @@ using namespace std;
 double* Gauss(double**,double*,int);
 void printmatrix(double**,int);
 double* jacobi(double**,double*,int);
+double* gaussSeidel(double**,double*,int);
 int main()
 {
     cout<<"\nMetodos de solucion de sistemas de ecuaciones lineales\n";
@@ -77,6 +78,7 @@ int main()
         cout<<"\n\nSelecciona una opcion:\n";
         cout<<"1.Eliminacion Gaussiana\n";
         cout<<"2.Jacobi\n";
+        cout<<"3.Gauss-Seidel\n";
         cout<<"0.Salir\n";
         cin>>op;
         switch (op)
@@ -88,6 +90,9 @@ int main()
             break;
         case 2:
             jacobi(matrixA,vectorb,n);
+            break;
+        case 3:
+            gaussSeidel(matrixA,vectorb,n);
             break;
         default:
             cout<<"Opcion invalida!\n";
@@ -236,10 +241,9 @@ double* jacobi(double** matrixA,double* vectorb,int n )
     double e=1,tol=0;
     cout<<"Ingresa una tolerancia: ";
     cin>>tol; 
-    int iter=0;
+    int iter=1;
     do
     {
-        iter++;
         for(int i = 0; i<n;i++)
         {
             double suma = 0;
@@ -258,6 +262,7 @@ double* jacobi(double** matrixA,double* vectorb,int n )
         //actualizar vector
         for(int i=0;i<n;i++)
             xv[i]=xn[i];
+        iter++;
     } while (e>tol && iter<1000);
     
     //impresion
@@ -269,4 +274,82 @@ double* jacobi(double** matrixA,double* vectorb,int n )
 
     return xn;
 
+}
+double* gaussSeidel(double** matrixA,double* vectorb,int n)
+{
+    //verificar A diagonalmente dominante
+    for(int i=0;i<n;i++)
+    {
+        double suma = 0;
+        for(int j=0;j<n;j++)
+        {
+            if(j!=i)
+            {
+                suma += fabs(matrixA[j][i]);
+            }
+        }
+        if(fabs(matrixA[i][i]) < suma)
+            cout<<"\nADVERTENCIA: Matriz no es diagonalmente dominante\n";
+        if(matrixA[i][i]==0)
+        {
+            cout<<"\nCero en la diagonal";
+            exit(1);
+        }
+    }
+
+    //JACOBI
+    double *xn = (double*)malloc(n*sizeof(double));
+
+    double *xv = (double*)malloc(n*sizeof(double));
+
+    //definimos vector x0=(0,0,...,0)
+
+    for(int i =0;i<n;i++)
+        xv[i]=0;
+
+    double e=1,tol=0;
+    cout<<"Ingresa una tolerancia: ";
+    cin>>tol; 
+    int iter=1;
+    do
+    {
+        for(int i = 0; i<n;i++)
+        {
+            double suma = 0;
+            if(i == 0)
+            {
+                for(int j = 1; j<n;j++)
+                    suma += matrixA[i][j] * xv[j];
+                xn[i]=(vectorb[i]-suma)/matrixA[i][i];
+
+            }
+            else
+            {
+                for(int j=0;j<i;j++)
+                    suma+=matrixA[i][j]*xn[j];
+                for(int j=i+1;j<n;j++)
+                    suma+=matrixA[i][j]*xv[j];
+                xn[i]=(vectorb[i]-suma)/matrixA[i][i];
+
+            }
+        }
+
+        //calculo del error(Absoluto)
+        double suma =0;
+        for(int i=0;i<n;i++)
+            suma += pow(xn[i]-xv[i],2);
+        e=sqrt(suma);
+
+        //actualizar vector
+        for(int i=0;i<n;i++)
+            xv[i]=xn[i];
+        iter++;
+    } while (e>tol && iter<10000);
+     //impresion
+    cout<<"Resultados:\n";
+    for(int i=0;i<n;i++)
+        cout<<"X"<<i+1<<" = "<<xn[i]<<"\n";
+    cout<<"Error abs estimado: "<<e<<"\n";
+    cout<<"Iteraciones: "<<iter<<"\n\n";
+    return xn;
 }
