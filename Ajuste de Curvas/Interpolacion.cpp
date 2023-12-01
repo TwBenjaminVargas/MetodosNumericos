@@ -3,7 +3,7 @@
  * @author Benjamin Vargas
  * @version 1.0
 */
-#define PRESICION 3 //cantidad de decimales a imprimir
+#define PRECISION 3 //cantidad de decimales a imprimir
 #include<iostream>
 #include<cmath>
 #include <iomanip>
@@ -146,16 +146,16 @@ void LaGrange(double **nodes, int n)
     {
         if(ii==0)
         {
-            cout<<"("<<setprecision(PRESICION)<<a[ii]<<")+";
+            cout<<"("<<setprecision(PRECISION)<<a[ii]<<")+";
         }
         else if(ii<n-1 && ii>0)
         {
-            cout<<"("<<setprecision(PRESICION)<<a[ii]<<")*(x)^"<<ii<<"+";
+            cout<<"("<<setprecision(PRECISION)<<a[ii]<<")*(x)^"<<ii<<"+";
 
         }
         else if(ii==n-1)
         {
-            cout<<"("<<setprecision(PRESICION)<<a[ii]<<")*(x)^"<<ii;
+            cout<<"("<<setprecision(PRECISION)<<a[ii]<<")*(x)^"<<ii;
         }
     }
     cout<<"\n";
@@ -253,7 +253,7 @@ double* Gauss(double** matrixA, double* vectorb,int n)
         cout<<"\n\nResultados: \n";
         for(int ii=0;ii<n;ii++)
         {
-            cout<<" a"<<ii<<" = "<<setprecision(PRESICION)<<x[ii]<<"\n";
+            cout<<" a"<<ii<<" = "<<setprecision(PRECISION)<<x[ii]<<"\n";
         }
         return x;
 }

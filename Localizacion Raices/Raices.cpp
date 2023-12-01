@@ -3,7 +3,7 @@
  * @author Benjamin Vargas
  * @version 5.0
 */
-#define PRESICION 24 //cantidad de decimales a imprimir
+#define PRECISION 24 //cantidad de decimales a imprimir
 #include<iostream>
 #include<cmath>
 #include <iomanip>
@@ -146,7 +146,7 @@ void biseccion (void)
 
         }while(e > tol);
         
-        cout<<"\nRaiz = "<<setprecision(PRESICION) << c<<"\nError: "<<setprecision(PRESICION) << e<<"\nIteraciones:"<<i<<"\n";
+        cout<<"\nRaiz = "<<setprecision(PRECISION) << c<<"\nError: "<<setprecision(PRECISION) << e<<"\nIteraciones:"<<i<<"\n";
     }
 
 }
@@ -215,7 +215,7 @@ void regularFalsi(void)
 
         }while(e > tol);
         
-        cout<<"\nRaiz = "<<setprecision(PRESICION) << c<<"\nError: "<<setprecision(PRESICION) << e<<"\nIteraciones:"<<i<<"\n";
+        cout<<"\nRaiz = "<<setprecision(PRECISION) << c<<"\nError: "<<setprecision(PRECISION) << e<<"\nIteraciones:"<<i<<"\n";
     }
 }
 
@@ -252,7 +252,7 @@ void puntoFijo(void)
         xv = xn;
         i++;
     } while (e > tol);
-    cout<<"\nPunto fijo = "<<setprecision(PRESICION)<<xn<<"\nError= "<<setprecision(PRESICION)<<e<<"\nIteraciones: "<<i<<"\n";
+    cout<<"\nPunto fijo = "<<setprecision(PRECISION)<<xn<<"\nError= "<<setprecision(PRECISION)<<e<<"\nIteraciones: "<<i<<"\n";
 }
 
 void newtonRaphson(void)
@@ -299,7 +299,7 @@ void newtonRaphson(void)
     while(e>tol);
     if(!flag)
     {
-        cout<<"\nRaiz = "<<setprecision(PRESICION)<<xn<<"\nError= "<<setprecision(PRESICION)<<e<<"\nIteraciones: "<<ii;
+        cout<<"\nRaiz = "<<setprecision(PRECISION)<<xn<<"\nError= "<<setprecision(PRECISION)<<e<<"\nIteraciones: "<<ii;
     }   
 }
 
@@ -337,6 +337,6 @@ void secante(void)
     if(!flag)
     {
 
-        cout<<"\nRaiz = "<<setprecision(PRESICION)<<xn<<"\nError= "<<setprecision(PRESICION)<<e<<"\nIteraciones: "<<ii<<"\n";
+        cout<<"\nRaiz = "<<setprecision(PRECISION)<<xn<<"\nError= "<<setprecision(PRECISION)<<e<<"\nIteraciones: "<<ii<<"\n";
     }
 }

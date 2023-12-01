@@ -3,7 +3,7 @@
  * @author Benjamin Vargas
  * @version 3.2
 */
-#define PRESICION 10 //cantidad de decimales a imprimir
+#define PRECISION 10 //cantidad de decimales a imprimir
 #include<iostream>
 #include<cmath>
 #include <iomanip>
@@ -193,7 +193,7 @@ double* Gauss(double** matrixA, double* vectorb,int n)
         cout<<"\n\nResultados: \n";
         for(int ii=0;ii<n;ii++)
         {
-            cout<<" x"<<ii+1<<" = "<<setprecision(PRESICION)<<x[ii]<<"\n";
+            cout<<" x"<<ii+1<<" = "<<setprecision(PRECISION)<<x[ii]<<"\n";
         }
         return x;
 }
@@ -275,8 +275,8 @@ double* jacobi(double** matrixA,double* vectorb,int n )
     //impresion
     cout<<"Resultados:\n";
     for(int i=0;i<n;i++)
-        cout<<"X"<<i+1<<" = "<<setprecision(PRESICION)<<xn[i]<<"\n";
-    cout<<"Error abs estimado: "<<setprecision(PRESICION)<<e<<"\n";
+        cout<<"X"<<i+1<<" = "<<setprecision(PRECISION)<<xn[i]<<"\n";
+    cout<<"Error abs estimado: "<<setprecision(PRECISION)<<e<<"\n";
     cout<<"Iteraciones: "<<iter<<"\n\n";
 
     return xn;
@@ -354,8 +354,8 @@ double* gaussSeidel(double** matrixA,double* vectorb,int n)
      //impresion
     cout<<"Resultados:\n";
     for(int i=0;i<n;i++)
-        cout<<"X"<<i+1<<" = "<<setprecision(PRESICION)<<xn[i]<<"\n";
-    cout<<"Error abs estimado: "<<setprecision(PRESICION)<<e<<"\n";
+        cout<<"X"<<i+1<<" = "<<setprecision(PRECISION)<<xn[i]<<"\n";
+    cout<<"Error abs estimado: "<<setprecision(PRECISION)<<e<<"\n";
     cout<<"Iteraciones: "<<iter<<"\n\n";
     return xn;
 }

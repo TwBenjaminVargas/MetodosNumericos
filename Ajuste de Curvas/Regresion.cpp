@@ -3,7 +3,7 @@
  * @author Benjamin Vargas
  * @version 1.1
 */
-#define PRESICION 3 //cantidad de decimales a imprimir
+#define PRECISION 3 //cantidad de decimales a imprimir
 #include<iostream>
 #include<cmath>
 #include <iomanip>
@@ -110,16 +110,16 @@ int main()
     {
         if(ii==0)
         {
-            cout<<"("<<setprecision(PRESICION)<<a[ii]<<")+";
+            cout<<"("<<setprecision(PRECISION)<<a[ii]<<")+";
         }
         else if(ii<p-1 && ii>0)
         {
-            cout<<"("<<setprecision(PRESICION)<<a[ii]<<")*(x)^"<<ii<<"+";
+            cout<<"("<<setprecision(PRECISION)<<a[ii]<<")*(x)^"<<ii<<"+";
 
         }
         else if(ii==p-1)
         {
-            cout<<"("<<setprecision(PRESICION)<<a[ii]<<")*(x)^"<<ii;
+            cout<<"("<<setprecision(PRECISION)<<a[ii]<<")*(x)^"<<ii;
         }
     }
     cout<<"\n";
@@ -149,7 +149,7 @@ int main()
     }
 
     double r = sqrt((st2-sr2)/st2);
-    cout<<"Coeficiente de correlacion r="<<setprecision(PRESICION)<<r<<"\n";
+    cout<<"Coeficiente de correlacion r="<<setprecision(PRECISION)<<r<<"\n";
     return 0;
 }
 
@@ -236,7 +236,7 @@ double* Gauss(double** matrixA, double* vectorb,int n)
         cout<<"\n\nResultados: \n";
         for(int ii=0;ii<n;ii++)
         {
-            cout<<" a"<<ii<<" = "<<setprecision(PRESICION)<<x[ii]<<"\n";
+            cout<<" a"<<ii<<" = "<<setprecision(PRECISION)<<x[ii]<<"\n";
         }
         return x;
 }
