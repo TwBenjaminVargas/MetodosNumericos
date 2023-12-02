@@ -1,7 +1,7 @@
 /**
  * Integracion a traves de diferentes metodos numericos
  * @author Benjamin Vargas
- * @version 1.0
+ * @version 2.0
 */
 #define PRECISION 6 //cantidad de decimales a imprimir
 #include<iostream>
@@ -10,8 +10,10 @@
 using namespace std;
 
 double f(double);
-void trapecionodes(double**, int);
+void trapecio(double**, int);
 void trapecio();
+void simpson();
+void simpson(double**, int);
 
 double f (double x)
 {
@@ -73,6 +75,8 @@ int main()
         cout<<"\nSelecciona una opcion:\n";
         cout<<"1.Trapecio compuesto f(x)\n";
         cout<<"2.Trapecio compuesto nodes\n";
+        cout<<"3.Simpson compuesto f(x)\n";
+        cout<<"4.Simpson compuesto nodes\n";
         cout<<"0.Salir\n";
         cin>>op;
         switch (op)
@@ -83,7 +87,13 @@ int main()
             trapecio();
             break;
         case 2:
-            trapecionodes(nodes,n);
+            trapecio(nodes,n);
+            break;
+        case 3:
+            simpson();
+            break;
+        case 4:
+            simpson(nodes,n);
             break;
         default:
             cout<<"Opcion invalida!\n";
@@ -96,7 +106,7 @@ int main()
     return 0;
 }
 
-void trapecionodes(double** nodes, int n) {
+void trapecio(double** nodes, int n) {
     cout<<"\nTrapecio compuesto utilizando nodos\n";
     cout<<"ADVERTENCIA: SE INTEGRA TODO EL INTERVALO DADO POR LOS NODOS x0 Y Xn\n";
     double a, b;
@@ -127,15 +137,15 @@ void trapecionodes(double** nodes, int n) {
 
 void trapecio() {
 
-    cout<<"trapecio compuesto utilizando f(x) definida";
+    cout<<"trapecio compuesto utilizando f(x) definida\n";
     double a, b;
     int intervals;
-    printf("Ingrese el limite de integracion inferior\n");
-    scanf("%lf", &a);
-    printf("Ingrese el limite de integracion superior\n");
-    scanf("%lf", &b);
-    printf("Ingrese la cantidad de intervalos\n");
-    scanf("%d", &intervals);
+    cout<<"Ingrese el limite de integracion inferior\n";
+    cin>>a;
+    cout<<"Ingrese el limite de integracion superior\n";
+    cin>>b;
+    cout<<"Ingrese la cantidad de intervalos\n";
+    cin>>intervals;
 
     double h = (b - a) / intervals;
 
@@ -147,5 +157,81 @@ void trapecio() {
 
     cout<<"Valor de la integral: "<<setprecision(PRECISION)<<sum<<"\n";
     
+
+}
+
+void simpson() {
+
+    cout<<"Simpson 1/3 compuesto utilizando f(x) definida\n";
+    double a, b;
+    int intervals;
+    cout<<"\nIngrese el limite de integracion inferior\n";
+    cin>>a;
+    cout<<"Ingrese el limite de integracion superior\n";
+    cin>>b;
+    cout<<"Ingrese la cantidad de intervalos\n";
+    cin>>intervals;
+    
+
+    if (intervals % 2 != 0) 
+    {
+        cout<<"El numero de intervalos debe ser par\n";
+    }
+    else
+    {
+        double h = (b - a) / intervals;
+        double sum = f(a) + f(b);
+
+        for (int i = 1; i < (intervals / 2); ++i) {
+            double x = a + 2 * i * h;
+            sum = sum + 2 * f(x) + 4 * f(x - h);
+        }
+
+        sum = (h / 3) * (sum + 4 * f(b - h));
+
+        cout<<"El valor de la integral es de:"<<setprecision(PRECISION)<<sum<<"\n";
+
+    }
+
+}
+
+
+
+void simpson(double** nodes, int n) {
+
+     cout<<"\nSimpson 1/3 compuesto utilizando nodos\n";
+    cout<<"ADVERTENCIA: SE INTEGRA TODO EL INTERVALO DADO POR LOS NODOS x0 Y Xn\n";
+    double a, b;
+    int intervals = n - 1;
+
+    a = nodes[0][0];
+    b = nodes[n-1][0];
+
+    cout<<"Limite inferior: a = "<<a<<"\n"<<"Limite superior: b = "<<b<<"\n";
+
+    double h = (b - a) / intervals;
+    cout<<"valor de h: "<<h<<"\n";
+
+    if (intervals % 2 != 0)
+    {
+        cout<<"El numero de intervalos debe ser par\n";
+    }
+    else
+    {
+        //double sum = f(a) + f(b);
+        double sum = nodes[0][1] + nodes[n - 1][1];
+
+        for (int i = 1; i < (intervals / 2); ++i) {
+            //x = a + 2*i*h;
+            //sum = sum + 2 * f(x) + 4 * f(x - h);
+            sum = sum + 2 * nodes[2 * i][1] + 4 * nodes[2 * i - 1][1];
+        }
+
+        //sum = (h / 3) * (sum + 4 * f(b - h));
+        sum = (h / 3) * (sum + 4 * nodes[n - 2][1]);
+
+        cout<<"El valor de la integral es de:"<<setprecision(PRECISION)<<sum<<"\n";
+
+    }
 
 }
